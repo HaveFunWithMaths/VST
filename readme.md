@@ -21,11 +21,11 @@ Your workspace contains the following core files:
 
 To run this tool, you need:
 1.  **Python 3.6+** installed on your system.
-2.  **`openpyxl`** library for handling Excel files.
+2.  Dependencies specified in `requirements.txt`.
 
-Install `openpyxl` via your terminal or command prompt:
+Install the required dependencies via your terminal or command prompt:
 ```bash
-pip install openpyxl
+pip install -r requirements.txt
 ```
 
 ---

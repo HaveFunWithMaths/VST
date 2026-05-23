@@ -1,0 +1,16 @@
+# Sensitive financial data files
+statement.xlsx
+OutputTemplate.xlsx
+OutputTemplate_Backup.xlsx
+
+# Python runtime artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE and OS metadata
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
