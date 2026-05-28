@@ -3,11 +3,17 @@
   "builds": [
     {
       "src": "api/status.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "includeFiles": ["api/helper.py"]
+      }
     },
     {
       "src": "api/update.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "includeFiles": ["api/helper.py"]
+      }
     },
     {
       "src": "index.html",
