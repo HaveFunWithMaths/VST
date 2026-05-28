@@ -6,7 +6,7 @@ from http.server import BaseHTTPRequestHandler
 
 APPS_SCRIPT_URL = os.environ.get(
     'APPS_SCRIPT_URL',
-    'https://script.google.com/macros/s/AKfycbyJIBkLcYnVQ7HDozxzyyOh6nMmvAipQIBY67DjA7KRjsywRBAkA5O9FN4aRcELuRDe/exec'
+    'https://script.google.com/macros/s/AKfycbytLE8PgbHy4eAba2eTUG2BQ6bZLnU9r4-huJ_JmhdtLIcCOPwuPmWtF7tI9MYyEog/exec'
 )
 
 
