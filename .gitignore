@@ -1,7 +1,10 @@
 # Sensitive financial data files
 statement.xlsx
+statement.csv
 OutputTemplate.xlsx
 OutputTemplate_Backup.xlsx
+FinalOutput.xlsx
+~$*
 
 # Python runtime artifacts
 __pycache__/

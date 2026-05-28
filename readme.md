@@ -87,3 +87,30 @@ python process_statement.py
 > [!TIP]
 > **Running for a new financial year?**
 > Update the sheet names inside `OutputTemplate.xlsx` and the calendar mapping inside `process_statement.py` (lines 173-178) to match the new year.
+
+---
+
+## 🌐 Public Hosting via Vercel
+
+Since the web application is built as a single-page static site (HTML, CSS, and client-side JavaScript), you can host it publicly on **Vercel** for free.
+
+### Step 1: Install Vercel CLI (Optional)
+If you want to deploy from the command line:
+1. Install Vercel globally:
+   ```bash
+   npm install -g vercel
+   ```
+2. Run the deployment command in the project folder:
+   ```bash
+   vercel
+   ```
+3. Follow the CLI prompts to log in and set up your project.
+
+### Step 2: Deploy via GitHub (Recommended)
+For automatic continuous deployments:
+1. Push this project folder to a repository on **GitHub**, **GitLab**, or **Bitbucket**.
+2. Go to [Vercel.com](https://vercel.com/) and log in with your Git provider.
+3. Click **Add New** -> **Project**.
+4. Import your repository.
+5. Vercel will automatically detect the static project and the `vercel.json` settings. Click **Deploy**.
+6. Within a minute, your web application will be live at a public URL (e.g., `https://your-project-name.vercel.app`).

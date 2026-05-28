@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bank Statement Spreadsheet Ledger Updater (2026 - 2027)</title>
+  <link rel="stylesheet" href="index.css">
+  <!-- SheetJS to parse Excel (XLSX, XLS) and CSV files directly in browser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header>
+      <div class="logo-container">
+        <img src="public/assets/GNHLogo.png" alt="GNH Logo" onerror="this.src='https://placehold.co/100x100?text=GNH+Logo'">
+        <div class="logo-text">
+          <h1>Bank Book Ledger</h1>
+          <span>Financial Year 2026 - 2027</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="https://docs.google.com/spreadsheets/d/1a4UOK-OLhu70Rop3OQx3QGjPdLWhnvuPYPKaFt8J0kk/edit?usp=sharing" target="_blank" class="btn-secondary" id="google-sheet-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          Open Google Sheet
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Grid -->
+    <div class="dashboard-grid">
+      
+      <!-- Left Column: Controls & Uploader -->
+      <div class="left-column">
+        
+        <!-- Statement Uploader Card -->
+        <div class="card" id="uploader-card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
+            <div class="card-title" style="margin-bottom: 0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              Upload Statement
+            </div>
+            <div class="status-pill" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); padding: 0.3rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem;">
+              <span style="width: 6px; height: 6px; background-color: var(--warning-color); border-radius: 50%;"></span>
+              <span style="color: var(--text-muted);">Sheet Update:</span>
+              <span id="last-update-date" style="color: var(--text-main);">Loading...</span>
+            </div>
+          </div>
+          
+          <div id="dropzone" class="dropzone">
+            <div class="upload-icon">📁</div>
+            <div class="dropzone-text">
+              <h3>Drag & drop statement file</h3>
+              <p>Supports XLSX, XLS, or CSV formats</p>
+            </div>
+            <button class="btn-secondary" onclick="document.getElementById('file-input').click()">Browse Files</button>
+            <input type="file" id="file-input" class="file-input" accept=".xlsx, .xls, .csv">
+          </div>
+
+          <div id="file-info-box" class="file-info-box" style="display: none;">
+            <div class="file-details">
+              <span class="file-details-icon">📄</span>
+              <div>
+                <div id="file-name" class="file-name">statement.xlsx</div>
+                <div id="file-size" class="file-size">24.5 KB</div>
+              </div>
+            </div>
+            <button id="btn-remove-file" class="btn-remove-file" title="Remove file">✕</button>
+          </div>
+        </div>
+
+        <!-- Processing Logs Card -->
+        <div class="card">
+          <div class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5"><polyline points="4 17 10 11 16 17 20 11"></polyline><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="21" x2="22" y2="21"></line></svg>
+            System Console
+          </div>
+          <div id="log-box" class="log-box">
+            <div class="log-entry info">
+              <span class="log-time">[Pending]</span>
+              <span>Waiting for server initialization...</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Instructions & Statement Preview -->
+      <div class="right-column">
+        
+        <!-- Instructions Panel -->
+        <div class="card" id="instructions-card">
+          <div class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            How it works
+          </div>
+          <div style="font-size: 0.9rem; color: var(--text-muted);">
+            <ol style="margin-left: 1.2rem; display: flex; flex-direction: column; gap: 0.75rem;">
+              <li><strong>Upload Bank Statement:</strong> Select or drop your bank statement Excel/CSV file.</li>
+              <li><strong>Review Preview:</strong> Check the transaction summary and preview list.</li>
+              <li><strong>Commit Changes:</strong> Click "Update Google Sheet" to upload and compute ledger formulas automatically.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Preview Card -->
+        <div class="card" id="preview-card" style="display: none; animation: fadeIn 0.3s ease;">
+          <div class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line></svg>
+            Statement Preview
+          </div>
+          
+          <div class="preview-summary">
+            <div class="summary-item">
+              <div class="summary-item-label">Start Date</div>
+              <div id="preview-start-date" class="summary-item-value">-</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-item-label">End Date</div>
+              <div id="preview-end-date" class="summary-item-value">-</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-item-label">Inflows Total</div>
+              <div id="preview-inflow-total" class="summary-item-value value-inflow">0.00</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-item-label">Outflows Total</div>
+              <div id="preview-outflow-total" class="summary-item-value value-outflow">0.00</div>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table id="preview-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Inflow</th>
+                  <th>Outflow</th>
+                  <th>Ref No.</th>
+                </tr>
+              </thead>
+              <tbody id="preview-table-body">
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="action-bar">
+            <button id="btn-update-sheet" class="btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              Update Google Sheet
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Warning / Overlap Modal Dialog -->
+  <div id="warning-modal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-header-icon">⚠️</span>
+        <h3>Statement Overlap Warning</h3>
+      </div>
+      <div class="modal-body">
+        <p>The uploaded statement contains transactions that are older than or same date as the last update date on the Google Sheet.</p>
+        
+        <div class="warning-details-box">
+          <div class="warning-row">
+            <span>Last Update Date on Sheet:</span>
+            <strong id="modal-last-update">-</strong>
+          </div>
+          <div class="warning-row">
+            <span>Uploaded Statement Starts:</span>
+            <strong id="modal-stmt-start">-</strong>
+          </div>
+        </div>
+        
+        <p>If you click <strong>Continue</strong>, the statement transactions will be filtered, and <strong>only transactions on or after <span id="modal-cutoff-date" style="font-weight: 700; color: var(--warning-color);">-</span> will be written to the Google Sheet</strong>. Existing transactions in the sheet prior to this date will be preserved.</p>
+        <p>Do you want to continue?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-modal-cancel" class="btn-secondary">Cancel Upload</button>
+        <button id="btn-modal-continue" class="btn-primary" style="background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);">
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
