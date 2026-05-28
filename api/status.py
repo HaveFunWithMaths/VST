@@ -31,6 +31,8 @@ def call_apps_script(url, method='GET', payload=None):
         try:
             response = opener.open(req)
             body = response.read().decode('utf-8')
+            if not body or body.strip().startswith('<'):
+                raise Exception("Google Apps Script returned an error page instead of JSON. Please redeploy the Apps Script in your Google Sheet.")
             return json.loads(body)
         except urllib.error.HTTPError as e:
             if e.code in (301, 302, 303, 307, 308):
