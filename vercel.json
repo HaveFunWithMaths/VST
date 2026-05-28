@@ -1,16 +1,46 @@
 {
   "version": 2,
-  "cleanUrls": true,
+  "builds": [
+    {
+      "src": "api/status.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/update.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "index.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "app.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/assets/**",
+      "use": "@vercel/static"
+    }
+  ],
   "routes": [
+    {
+      "src": "/api/status",
+      "dest": "api/status.py"
+    },
+    {
+      "src": "/api/update",
+      "dest": "api/update.py"
+    },
     {
       "src": "/public/assets/(.*)",
       "headers": {
         "cache-control": "public, max-age=31536000, immutable"
       },
-      "continue": true
-    },
-    {
-      "handle": "filesystem"
+      "dest": "public/assets/$1"
     },
     {
       "src": "/(.*)",
