@@ -6,7 +6,7 @@ import webbrowser
 
 # Add api directory to sys.path to allow imports
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'api'))
-import helper
+import _helper as helper
 
 PORT = 8000
 

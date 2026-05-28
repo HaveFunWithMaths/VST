@@ -1,37 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/status.py",
-      "use": "@vercel/python",
-      "config": {
-        "includeFiles": ["api/helper.py"]
-      }
-    },
-    {
-      "src": "api/update.py",
-      "use": "@vercel/python",
-      "config": {
-        "includeFiles": ["api/helper.py"]
-      }
-    },
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "index.css",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "app.js",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "public/assets/**",
-      "use": "@vercel/static"
-    }
-  ],
   "routes": [
     {
       "src": "/api/status",
