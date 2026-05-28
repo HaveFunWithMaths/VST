@@ -36,11 +36,19 @@
       "dest": "api/update.py"
     },
     {
+      "src": "/index.css",
+      "dest": "/index.css"
+    },
+    {
+      "src": "/app.js",
+      "dest": "/app.js"
+    },
+    {
       "src": "/public/assets/(.*)",
       "headers": {
         "cache-control": "public, max-age=31536000, immutable"
       },
-      "dest": "public/assets/$1"
+      "dest": "/public/assets/$1"
     },
     {
       "src": "/(.*)",
