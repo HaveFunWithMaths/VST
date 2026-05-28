@@ -1,0 +1,7 @@
+# Ignore local development server and CLI scripts from Vercel deployment
+server.py
+process_statement.py
+google_apps_script.js
+statementTemplate.xlsx
+readme.md
+requirements.txt
