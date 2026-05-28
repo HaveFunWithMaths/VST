@@ -204,9 +204,9 @@ function parseStatementFile(file) {
         const cleanRow = row.map(cell => cell !== null && cell !== undefined ? String(cell).trim().toLowerCase() : "");
         
         // Find columns
-        const dateIdx = cleanRow.findIndex(h => h.includes('value date') || h === 'date');
-        const descIdx = cleanRow.findIndex(h => h.includes('description') || h.includes('particulars'));
-        const amtIdx = cleanRow.findIndex(h => h === 'amount' || h.includes('value'));
+        const dateIdx = cleanRow.findIndex(h => h.includes('value date') || h === 'date' || h === 'txn date' || h === 'transaction date');
+        const descIdx = cleanRow.findIndex(h => h.includes('description') || h.includes('particulars') || h.includes('narration'));
+        const amtIdx = cleanRow.findIndex(h => h === 'amount' || h === 'withdrawal amt.' || h === 'deposit amt.' || (h.includes('amount') && !h.includes('date')));
         
         // Required columns to identify header row
         if (dateIdx !== -1 && descIdx !== -1 && amtIdx !== -1) {
@@ -215,8 +215,8 @@ function parseStatementFile(file) {
           colIndexes.description = descIdx;
           colIndexes.amount = amtIdx;
           colIndexes.ref_no = cleanRow.findIndex(h => h.includes('chq') || h.includes('ref') || h.includes('cheque'));
-          colIndexes.dr_cr = cleanRow.findIndex(h => h.includes('dr') || h.includes('cr') || h.includes('type'));
-          colIndexes.balance = cleanRow.findIndex(h => h === 'balance' || h.includes('bal'));
+          colIndexes.dr_cr = cleanRow.findIndex(h => h === 'dr / cr' || h === 'dr/cr' || h === 'type' || h === 'cr/dr' || h === 'transaction type' || h === 'debit/credit' || (h.includes('dr') && h.includes('cr')));
+          colIndexes.balance = cleanRow.findIndex(h => h === 'balance' || h === 'closing balance' || (h.includes('bal') && !h.includes('debit') && !h.includes('credit')));
           break;
         }
       }
